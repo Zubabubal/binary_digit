@@ -14,14 +14,14 @@ class Digit:
         while number > 0:
             binary = str(number % 2) + binary
             number //= 2
-        binary = binary.zfill(self.MAX_BITS)  # Дополняем до 31 бита
-        return '0' + binary  # Добавляем знаковый бит (0 для положительных чисел)
+        binary = binary.zfill(self.MAX_BITS)  
+        return '0' + binary  
 
     def negative_bin(self, dec_num):
         """Преобразует отрицательное число в двоичное представление."""
         abs_number = abs(dec_num)
-        binary = self.positive_bin(abs_number)[1:]  # Убираем знаковый бит
-        return '1' + binary.zfill(self.MAX_BITS)  # Добавляем знаковый бит (1 для отрицательных чисел)
+        binary = self.positive_bin(abs_number)[1:]  
+        return '1' + binary.zfill(self.MAX_BITS)  
 
     def preadditional_summa(self, bin_string):
         """Вычисляет дополнительный код для двоичного числа."""
