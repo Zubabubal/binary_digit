@@ -1,58 +1,86 @@
-from laba import *
-import unittest
+from laba import Digit  # Импортируем класс Digit
 
-class TestDigit(unittest.TestCase):
-    def setUp(self):
-        self.digit = Digit()
+def main():
+    operations = Digit()  # Создаем экземпляр класса
 
-    def test_positive_bin(self):
-        self.assertEqual(self.digit.positive_bin(10), '00000000000000000000000000001010')
-        self.assertEqual(self.digit.positive_bin(0), '00000000000000000000000000000000')
-        self.assertEqual(self.digit.positive_bin(255), '00000000000000000000000011111111')
+    print("Сложение:")
+    print("Ввод числа №1")
+    num1 = int(input())
+    print("Число введено:", num1)
+    print("Прямой код: [", operations.convert_to_binary_number(num1), "]", sep='')
+    print("Обратный код: [", operations.convert_to_reverse_binary(num1), "]", sep='')
+    print("Дополнительный код: [", operations.convert_to_additional_binary(num1), "]", sep='')
 
-    def test_negative_bin(self):
-        self.assertEqual(self.digit.negative_bin(-10), '10000000000000000000000000001010')
-        self.assertEqual(self.digit.negative_bin(-1), '10000000000000000000000000000001')
+    print("Ввод числа №2")
+    num2 = int(input())
+    print("Число введено:", num2)
+    print("Прямой код: [", operations.convert_to_binary_number(num2), "]", sep='')
+    print("Обратный код: [", operations.convert_to_reverse_binary(num2), "]", sep='')
+    print("Дополнительный код: [", operations.convert_to_additional_binary(num2), "]", sep='')
 
-    def test_preadditional_summa(self):
-        self.assertEqual(self.digit.preadditional_summa('0000000000000000000000000001010'), '0000000000000000000000000001011')
-        self.assertEqual(self.digit.preadditional_summa('11111111111111111111111111110110'), '11111111111111111111111111110111')
+    result = operations.additional_summa(num1, num2)
+    decimal_result = operations.convert_to_dec(result)
+    print("Результат:", decimal_result)
+    print("Прямой код: [", operations.convert_to_binary_number(decimal_result), "]", sep='')
+    print("Обратный код: [", operations.convert_to_reverse_binary(decimal_result), "]", sep='')
+    print("Дополнительный код: [", operations.convert_to_additional_binary(decimal_result), "]", sep='')
 
-    def test_binary_to_dec_num(self):
-        self.assertEqual(self.digit.binary_to_dec_num('1010'), 10)
-        self.assertEqual(self.digit.binary_to_dec_num('11111111'), 255)
+    print("Вычитание:")
+    result = operations.additional_subtract(num1, num2)
+    decimal_result = operations.convert_to_dec(result)
+    print("Результат:", decimal_result)
+    print("Прямой код: [", operations.convert_to_binary_number(decimal_result), "]", sep='')
+    print("Обратный код: [", operations.convert_to_reverse_binary(decimal_result), "]", sep='')
+    print("Дополнительный код: [", operations.convert_to_additional_binary(decimal_result), "]", sep='')
 
-    def test_convert_to_dec(self):
-        self.assertEqual(self.digit.convert_to_dec('0000000000000000000000000001010'), 10)
-        self.assertEqual(self.digit.convert_to_dec('11111111111111111111111111110110'), -10)
+    print("Умножение:")
+    print(operations.direct_code_multiplication(num1, num2))
 
-    def test_convert_to_binary_number(self):
-        self.assertEqual(self.digit.convert_to_binary_number(10), '00000000000000000000000000001010')
-        self.assertEqual(self.digit.convert_to_binary_number(-10), '10000000000000000000000000001010')
+    print("Деление:")
+    result = operations.divide_bin(num1, num2)
+    print(result)
 
-    def test_direct_code_to_int(self):
-        self.assertEqual(self.digit.direct_code_to_int('0000000000000000000000000001010'), 10)
-        self.assertEqual(self.digit.direct_code_to_int('11111111111111111111111111110110'), -2147483638)
+    # Цикл для сложения чисел с плавающей точкой
+    while True:
+        print("Сложение чисел с плавающей точкой (для выхода введите 'e'):")
+        print("Ввод числа №1")
+        float1_input = input()
+        if float1_input.lower() == 'e':
+            break
+        try:
+            float1 = float(float1_input)
+        except ValueError:
+            print("Ошибка: введите число или 'e' для выхода.")
+            continue
 
-    def test_float_to_binary_fraction(self):
-        self.assertEqual(self.digit.float_to_binary_fraction(0.5), '1')
-        self.assertEqual(self.digit.float_to_binary_fraction(0.25), '01')
+        print("Ввод числа №2")
+        float2_input = input()
+        if float2_input.lower() == 'e':
+            break
+        try:
+            float2 = float(float2_input)
+        except ValueError:
+            print("Ошибка: введите число или 'e' для выхода.")
+            continue
 
-    def test_convert_float_to_bin(self):
-        self.assertEqual(self.digit.convert_float_to_bin(10.5), '01000001001010000000000000000000')
-        self.assertEqual(self.digit.convert_float_to_bin(-10.5), '11000001001010000000000000000000')
+        binary_float1 = operations.convert_float_to_bin(float1)
+        binary_float2 = operations.convert_float_to_bin(float2)
 
-    def test_convert_bin_to_float(self):
-        self.assertAlmostEqual(self.digit.convert_bin_to_float('01000001001010000000000000000000'), 10.5)
-        self.assertAlmostEqual(self.digit.convert_bin_to_float('11000001001010000000000000000000'), -10.5)
+        # Разделяем биты на знак, экспоненту и мантиссу
+        sign1, exponent1, mantissa1 = binary_float1[0], binary_float1[1:9], binary_float1[9:]
+        sign2, exponent2, mantissa2 = binary_float2[0], binary_float2[1:9], binary_float2[9:]
 
-    def test_float_summa(self):
-        self.assertAlmostEqual(self.digit.float_summa(10.5, 20.5), 31.0)
-        self.assertAlmostEqual(self.digit.float_summa(-10.5, -20.5), -31.0)
+        print("Число 1 в формате IEEE 754: [", sign1, exponent1, mantissa1, "]", sep=' ')
+        print("Число 2 в формате IEEE 754: [", sign2, exponent2, mantissa2, "]", sep=' ')
 
-    def test_display_ieee(self):
-        # Этот метод просто печатает, поэтому мы просто вызываем его
-        self.digit.display_ieee('01000001001010000000000000000000')
+        result = operations.float_summa(float1, float2)
+        binary_result = operations.convert_float_to_bin(result)
+
+        # Разделяем биты результата на знак, экспоненту и мантиссу
+        sign_result, exponent_result, mantissa_result = binary_result[0], binary_result[1:9], binary_result[9:]
+
+        print("Результат (десятичный):", round(result, 5))  # Округляем результат до 5 знаков после запятой
+        print("Результат (двоичный, IEEE 754): [", sign_result, exponent_result, mantissa_result, "]", sep=' ')
 
 if __name__ == '__main__':
-    unittest.main()
+    main()
